@@ -36,9 +36,8 @@ AMEX       | 34 or 37             |   15
 Discover   | 6011                 |   16
 Mastercard | 51, 52, 53, 54 or 55 |   16
 VISA       | 4                    |   13 or 16
-
 TestCase:
-assert(get_issuer(4111111111111111) == "VISA"）
+assert(get_issuer(4111111111111111) == "VISA")
 get_issuer(4111111111111) == "VISA"
 get_issuer(4012888888881881) == "VISA"
 get_issuer(378282246310005) == "AMEX"
@@ -56,11 +55,9 @@ mappings=[
 def get_issuer(num):
     for mapping in mappings:
         flags=[str(num).startswith(str(x)) for x in mapping['Begins']]
-    if any(flags):
-        return mapping['name']
-    else:
-        return 'Unknown'
-
+        if any(flags):
+            return mapping['name']
+    return 'Unknown'
 # 高手法1
 ISSUERS = {
     ((34, 37), (15,)): 'AMEX',
@@ -71,6 +68,7 @@ ISSUERS = {
 # 直接 map替换 str。再直接整体 看 tuple是否在里面
 def get_issuer(number):
     for (starts,lenghs),issuer in ISSUERS.items():
+        # startswith(strs) strs可以放入tuple,里面的元素都可以被识别
         if str(number).startswith(tuple(map(str,starts))) and len(str(number)) in lenghs:
             return issuer
     return 'Unknown'
