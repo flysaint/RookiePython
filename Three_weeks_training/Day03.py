@@ -64,26 +64,46 @@ Step4
 if(len(set(row1)&set(row2)) == 0)
 '''
 
+
 import itertools
+
+
 def jiuGongge():
-#step1
-#琼剧
-nums=[x for x in range(1,10)]
-seq_3nums=[p for p in itertools.permutations(nums,3)]
-#􁬦􁄁􀚊􀞾􁒵􀔭15
-seq_3nums=[p for p in itertools.permutations(nums,3) if sum(p)==15]
-# print (seq_3nums)
-#step2:􀵤􁔱􁤈􀒅􀚜􀒅􀩒􁥯􀒅􀷑􀩒􁥯􀒅􀓾􁕚􀣐􀔅15
-matrix=[]
-for row1_1,row1_2,row1_3 in seq_3nums:
+    #step1
+    # 穷举3个数字的组合
+    nums=[x for x in range(1,10)]
+    seq_3nums=[p for p in itertools.permutations(nums,3)]
+    # 过滤出和等于15
+    seq_3nums=[p for p in itertools.permutations(nums,3) if sum(p)==15]
+    # print (seq_3nums)
+    #step2: 搜索出行、列、对角、斜对角，中线均为15
+    matrix=[]
+    for row1_1,row1_2,row1_3 in seq_3nums:
+        for row2_1,row2_2,row2_3 in seq_3nums:
+            for row3_1,row3_2,row3_3 in seq_3nums:
+                if row1_1+row1_2+row1_3==15 \
+                and row1_1+row2_2+row3_3==15 \
+                and row1_1+row2_1+row3_1==15 \
+                and row1_3+row2_2+row3_1==15 \
+                and row1_2+row2_2+row3_2==15:
+                    #step3 去重
+                    row1=[row1_1,row1_2,row1_3]
+                    row2=[row2_1,row2_2,row2_3]
+                    row3=[row3_1,row3_2,row3_3]
+                    if len(set(row1) & set(row2)) == 0:
+                        if row1 not in matrix:
+                            matrix = [row1, row2, row3]
+                            print (matrix)
+                            print ('-'*100)
 
 
-
-
-
-
-
-
+'''
+题目2
+猜数字游戏
+1. 让用户输入1~20，猜数字。可以猜5次。
+2. 每次有提示，大了，或者小了！
+3. 如果超过5次，提示game over
+'''
 
 
 
